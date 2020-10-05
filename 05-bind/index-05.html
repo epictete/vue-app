@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue App</title>
+</head>
+
+<body>
+    <div id="app">
+        <h1>{{ header.toUpperCase() }}</h1>
+        <div class="add-item">
+            <input type="text" v-model="newItem" @keyup.enter="saveItem">
+            <button @click="saveItem" :disabled="newItem.length === 0">Save item</button>
+        </div>
+        <a v-bind:href="newItem" target="_blank">Dynamic Link</a>
+        <ol>
+            <li v-for="item in items">{{ item }}</li>
+        </ol>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        var todo = new Vue({
+            el: '#app',
+            data: {
+                header: 'todo list app',
+                newItem: '',
+                items: [
+                    'Learn JavaScript',
+                    'Learn Vue',
+                    'Build something awesome'
+                ]
+            },
+            methods: {
+                saveItem: function () {
+                    this.items.push(this.newItem);
+                    this.newItem = '';
+                }
+            }
+
+        })
+    </script>
+
+</body>
+
+</html>

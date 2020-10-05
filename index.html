@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Vue App</title>
+</head>
+
+<body>
+    <div id="app" class="jumbotron">
+        <div class="header">
+            <h1>{{ header.toUpperCase() }}</h1>
+            <button v-if="state === 'default'" @click="changeState('edit')" class="btn btn-primary">Add Item</button>
+            <button v-else @click="changeState('default')" class="btn btn-danger">Cancel</button>
+        </div>
+        <div class="add-item" v-if="state === 'edit'">
+            <input type="text" v-model="newItem" @keyup.enter="saveItem">
+            <button class="btn btn-secondary" @click="saveItem" :disabled="newItem.length === 0">Save
+                Item</button>
+        </div>
+        <ul>
+            <li v-for="item in items">{{ item }}</li>
+        </ul>
+        <p v-if="items.length === 0">Nice Job!</p>
+        <a :href="newItem" target="_blank">Dynamic Link</a>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+        var todo = new Vue({
+            el: '#app',
+            data: {
+                header: 'todo list app',
+                state: 'default',
+                newItem: '',
+                items: [
+                    // 'Learn JavaScript',
+                    // 'Learn Vue',
+                    // 'Do something awesome'
+                ]
+            },
+            methods: {
+                saveItem: function () {
+                    this.items.push(this.newItem);
+                    this.newItem = '';
+                },
+                changeState: function (newState) {
+                    this.state = newState;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
